@@ -1,13 +1,15 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MessageCircle, BookOpen, Heart, TrendingUp, Shield, Phone } from "lucide-react";
+import { MessageCircle, BookOpen, Heart, TrendingUp, Shield, Phone, Info, Users, Stethoscope } from "lucide-react";
 import AIChat from "@/components/AIChat";
 import MoodTracker from "@/components/MoodTracker";
 import Journal from "@/components/Journal";
 import Dashboard from "@/components/Dashboard";
+import About from "./About";
+import Resources from "./Resources";
+import Services from "./Services";
 
 const Index = () => {
   const [activeView, setActiveView] = useState("dashboard");
@@ -20,6 +22,12 @@ const Index = () => {
         return <MoodTracker />;
       case "journal":
         return <Journal />;
+      case "about":
+        return <About />;
+      case "resources":
+        return <Resources />;
+      case "services":
+        return <Services />;
       default:
         return <Dashboard onNavigate={setActiveView} />;
     }
@@ -36,7 +44,7 @@ const Index = () => {
                 <Heart className="w-5 h-5 text-white" />
               </div>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-                SanityOS
+                BloomWell
               </h1>
             </div>
             
@@ -52,17 +60,20 @@ const Index = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Navigation */}
         <nav className="mb-8">
-          <div className="flex space-x-1 bg-white/60 backdrop-blur-sm p-1 rounded-xl border border-blue-100">
+          <div className="flex flex-wrap gap-1 bg-white/60 backdrop-blur-sm p-1 rounded-xl border border-blue-100">
             {[
               { id: "dashboard", label: "Dashboard", icon: TrendingUp },
               { id: "chat", label: "AI Therapist", icon: MessageCircle },
               { id: "mood", label: "Mood Tracker", icon: Heart },
               { id: "journal", label: "Journal", icon: BookOpen },
+              { id: "services", label: "Services", icon: Stethoscope },
+              { id: "resources", label: "Resources", icon: BookOpen },
+              { id: "about", label: "About", icon: Info },
             ].map(({ id, label, icon: Icon }) => (
               <Button
                 key={id}
                 variant={activeView === id ? "default" : "ghost"}
-                className={`flex-1 justify-center ${
+                className={`flex-1 justify-center min-w-0 ${
                   activeView === id
                     ? "bg-gradient-to-r from-blue-500 to-green-500 text-white shadow-lg"
                     : "text-gray-600 hover:text-gray-900"
@@ -70,7 +81,8 @@ const Index = () => {
                 onClick={() => setActiveView(id)}
               >
                 <Icon className="w-4 h-4 mr-2" />
-                {label}
+                <span className="hidden sm:inline">{label}</span>
+                <span className="sm:hidden">{label.split(' ')[0]}</span>
               </Button>
             ))}
           </div>
@@ -94,9 +106,12 @@ const Index = () => {
               <Badge variant="secondary" className="bg-blue-100 text-blue-700">
                 24/7 Available
               </Badge>
+              <Badge variant="secondary" className="bg-purple-100 text-purple-700">
+                Licensed Therapists
+              </Badge>
             </div>
             <p className="text-sm text-gray-500">
-              Your mental health journey, powered by AI
+              Your mental health journey, powered by evidence-based care
             </p>
           </div>
         </div>
